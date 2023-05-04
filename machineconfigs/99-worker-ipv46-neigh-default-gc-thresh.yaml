@@ -1,0 +1,18 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: worker
+  name: 99-worker-ipv46-neigh-default-gc-thresh
+spec:
+  config:
+    ignition:
+      version: 3.2.0
+    storage:
+      files:
+      - contents:
+          source: "data:,net.ipv4.neigh.default.gc_thresh1%3D8192%0Anet.ipv4.neigh.default.gc_thresh2%3D32768%0Anet.ipv4.neigh.default.gc_thresh3%3D65536%0Anet.ipv6.neigh.default.gc_thresh1%3D8192%0Anet.ipv6.neigh.default.gc_thresh2%3D32768%0Anet.ipv6.neigh.default.gc_thresh3%3D65536"
+        overwrite: true
+        path: /etc/sysctl.d/99-ipv46-neigh-default-gc-thresh.conf
+        user:
+          name: root
